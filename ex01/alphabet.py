@@ -1,6 +1,5 @@
 import random
 import datetime
-from xml.sax.handler import all_properties
 
 select_num = 10
 delete_num = 3
