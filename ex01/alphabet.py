@@ -13,7 +13,9 @@ def main():
         count += 1
         strs = select_alphabet()
         ans = shutudai(strs)
-        kaito(ans)
+        hantei = kaito(ans)
+        if hantei == 1:
+            break
     end = datetime.datetime.now()
     print(f"記録は{(end - start).seconds}秒です")
 
@@ -45,11 +47,11 @@ def kaito(ans):
         kaito2 = input(f"{i+1}文字目の欠損文字は?:")
         if kaito2 in ans:
             ans.remove(kaito2)
-            continue
         else:
             print("不正解です。もう一度やり直してください。")
             return
     print("全問正解です。おめでとうございます。")
+    return 1
     
 if __name__ == "__main__":
     main()
