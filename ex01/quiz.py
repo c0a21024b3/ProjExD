@@ -2,8 +2,10 @@ import random
 import datetime
 
 def main():
+    st = datetime.datetime.now()
     ans = shutudai()
-    kaito(ans)
+    ed = kaito(ans)
+    print(f"{(ed-st).seconds}秒")
 
 def shutudai():
     q = [["サザエの旦那の名前は？",["マスオ","ますお"]],
@@ -20,7 +22,8 @@ def kaito(ans):
     if uans in ans:
         print("正解")
     else:
-        print("不正解")
+        print("出直してこい")
+    return datetime.datetime.now()
     
 
 if __name__ == "__main__":
