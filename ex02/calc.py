@@ -4,7 +4,8 @@ import tkinter.messagebox as tkm
 def num_click(event):
     btn = event.widget
     txt = btn["text"]
-    tkm.showinfo("お知らせ", f"これは{txt}です。")
+    entry.insert(tk.END, f"{txt}")
+
 
 calc = tk.Tk()
 calc.title("電卓")
