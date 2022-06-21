@@ -39,15 +39,20 @@ def alldel_click(event):
     entry.delete(0, tk.END)
     entry.grid(row=0, column=0, columnspan=4)
 
+# 消去ボタンの動作
 def del_click(event):
     fun = entry.get()
     entry.delete(len(fun)-1,tk.END)
     entry.grid(row=0, column=0, columnspan=4)
 
+# 隠しボタンの動作
+def hide_click(event):
+    tkm.showinfo("Congratulations!", "おめでとうございます。隠しボタンボタンを発見しました。")
+
 # ウィンドウ作成
 calc = tk.Tk()
 calc.title("電卓")
-calc.geometry("400x500")
+calc.geometry("392x500")
 
 # 入力欄作成
 entry = tk.Entry(calc, justify="right", width=13, font=("Times New Roman", 40))
@@ -98,5 +103,10 @@ par_button.grid(row=1, column=2)
 del_button = tk.Button(calc, width=width, height=height, font=("Times New Roman", 30), text="◁")
 del_button.bind("<1>", del_click)
 del_button.grid(row=1, column=3)
+
+# 隠しボタン追加
+hide_button = tk.Button(calc, width=width, height=height*8, font=("Times New Roman", 30), text="?")
+hide_button.bind("<1>", hide_click)
+hide_button.grid(row=1, column=5, rowspan=5)
 
 calc.mainloop()
