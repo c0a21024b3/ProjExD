@@ -6,7 +6,7 @@ check_num = False # 直前の文字が数字かの判断
 width = 4 # ボタンの横幅
 height = 1 # ボタンの縦幅
 
-# 数字ボタンの動作
+# 数字と％の動作
 def num_click(event):
     global check_num
     check_num = True
