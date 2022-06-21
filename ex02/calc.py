@@ -5,7 +5,6 @@ import random
 num = False # 直前の文字が数字かの判断
 width = 4 # ボタンの横幅
 height = 1 # ボタンの縦幅
-calc = 0
 
 # 数字ボタンの動作
 def num_click(event):
