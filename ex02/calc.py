@@ -1,9 +1,11 @@
 import tkinter as tk
 import tkinter.messagebox as tkm
+import random 
 
 num = False # 直前の文字が数字かの判断
 width = 4 # ボタンの横幅
 height = 1 # ボタンの縦幅
+calc = 0
 
 # 数字ボタンの動作
 def num_click(event):
@@ -47,7 +49,16 @@ def del_click(event):
 
 # 隠しボタンの動作
 def hide_click(event):
-    tkm.showinfo("Congratulations!", "おめでとうございます。隠しボタンボタンを発見しました。")
+    num_list = list("0123456789")
+    random.shuffle(num_list)
+    for i in range(9):
+        button = tk.Button(calc, width=width, height=height, font=("Times New Roman", 30),text=num_list.pop())
+        button.bind("<1>", num_click)
+        button.grid(row=i//3+2, column=2-i%3)
+    button = tk.Button(calc, width=width, height=height, font=("Times New Roman", 30),text=num_list.pop())
+    button.bind("<1>", num_click)
+    button.grid(row=5, column=1)
+    tkm.showinfo("隠し機能", "数字をシャッフルしました")
 
 # ウィンドウ作成
 calc = tk.Tk()
