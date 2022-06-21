@@ -2,14 +2,14 @@ import tkinter as tk
 import tkinter.messagebox as tkm
 import random 
 
-num = False # 直前の文字が数字かの判断
+check_num = False # 直前の文字が数字かの判断
 width = 4 # ボタンの横幅
 height = 1 # ボタンの縦幅
 
 # 数字ボタンの動作
 def num_click(event):
-    global num
-    num = True
+    global check_num
+    check_num = True
     btn = event.widget
     txt = btn["text"]
     entry.insert(tk.END, f"{txt}")
@@ -28,9 +28,9 @@ def equal_click(event):
 
 # 四則演算,ピリオドの動作
 def button_click(event):
-    global num
-    if num:
-        num = False
+    global check_num
+    if check_num:
+        check_num = False
         btn = event.widget
         txt = btn["text"]
         entry.insert(tk.END, f"{txt}")
