@@ -19,8 +19,8 @@ def main_proc():
     cy = my * 100 + 50
     canvas.coords("kokaton", cx, cy)
     root.after(50, main_proc)
-    
-    
+
+
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("迷えるこうかとん")
