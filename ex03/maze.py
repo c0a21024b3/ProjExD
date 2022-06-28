@@ -11,10 +11,13 @@ def key_up(event):
 
 def main_proc():
     global cx, cy, mx, my
-    move = {"Up":[0, -1], "Down":[0, 1], "Right":[1, 0], "Left":[-1, 0], "":[0,0]}
-    if maze[my+move[key][1]][mx+move[key][0]] == 0:
-        mx += move[key][0]
-        my += move[key][1]
+    move = {"Up":[0, -1], "Down":[0, 1], "Right":[1, 0], "Left":[-1, 0]}
+    try:
+        if maze[my+move[key][1]][mx+move[key][0]] == 0:
+            mx += move[key][0]
+            my += move[key][1]
+    except:
+        pass
     cx = mx * 100 + 50
     cy = my * 100 + 50
     canvas.coords("kokaton", cx, cy)
