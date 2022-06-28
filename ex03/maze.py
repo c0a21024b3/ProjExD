@@ -34,6 +34,8 @@ if __name__ == "__main__":
                        )
     kokaton = tk.PhotoImage(file="ex03/fig/0.png")
     cx, cy = 300, 400
+    maze =  maze_maker.make_maze(15, 9)
+    maze_maker.show_maze(canvas, maze)
     canvas.create_image(cx, cy, image=kokaton, tag="kokaton")
     canvas.pack()
 
@@ -42,7 +44,5 @@ if __name__ == "__main__":
     root.bind("<KeyPress>", key_down)
     root.bind("<KeyRelease>", key_up)
     main_proc()
-
-    maze =  maze_maker.make_maze(15, 9)
 
     root.mainloop()
