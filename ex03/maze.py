@@ -14,14 +14,16 @@ def key_up(event):
     key = ""
 
 def main_proc():
-    global cx, cy, mx, my
-    move = {"Up":[0, -1], "Down":[0, 1], "Right":[1, 0], "Left":[-1, 0]}
+    global cx, cy, mx, my, key
+    move = {"Up":[0, -1], "Down":[0, 1], "Right":[1, 0], "Left":[-1, 0],"":[0, 0]}
     try:
         if maze[my+move[key][1]][mx+move[key][0]] != 1:
             mx += move[key][0]
             my += move[key][1]
     except:
-        pass
+        tkm.showerror("","矢印キーで動かしてください")
+        key = ""
+    
     cx = mx * 100 + 50
     cy = my * 100 + 50
     canvas.coords("kokaton", cx, cy)
