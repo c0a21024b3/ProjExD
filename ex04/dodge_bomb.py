@@ -27,6 +27,7 @@ def main():
     vx, vy = 1, 1
 
     while True:
+        #clock.tick(1000)
         screen.blit(bg, bg_rect)
 
         for event in pg.event.get():
@@ -43,14 +44,35 @@ def main():
             koka_rect.centerx -= 1
         if key_states[pg.K_RIGHT]:
             koka_rect.centerx += 1
+        
+        yoko, tate = check_bound(koka_rect, screen_rect)
+        if (yoko, tate) != (0,0):
+            koka_rect.centerx += yoko
+            koka_rect.centery += tate
         screen.blit(koka, koka_rect)
 
-
         bomb_rect.move_ip(vx, vy)
+        yoko, tate = check_bound(bomb_rect, screen_rect)
+        if yoko != 0:
+            vx *= -1
+        if tate != 0:
+            vy *= -1
         screen.blit(bomb, bomb_rect)
+        clock.tick(1000)
 
         pg.display.update()
-        clock.tick(1000)
+
+def check_bound(rect, scr_rect):
+    yoko, tate = 0, 0
+    if rect.left < scr_rect.left:
+        yoko = 1
+    if rect.right > scr_rect.right:
+        yoko = -1
+    if rect.top < scr_rect.top:
+        tate = 1
+    if rect.bottom > scr_rect.bottom:
+        tate = -1
+    return (yoko, tate)
 
 
 if __name__ == "__main__":
