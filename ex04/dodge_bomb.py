@@ -24,6 +24,7 @@ def main():
     pg.draw.circle(bomb, (255, 0, 0), (10, 10), 10)
     bomb_rect = bomb.get_rect()
     bomb_rect.center = random.randint(0,screen_rect.width),                        random.randint(0, screen_rect.height)
+    vx, vy = 1, 1
 
     while True:
         screen.blit(bg, bg_rect)
@@ -44,6 +45,8 @@ def main():
             koka_rect.centerx += 1
         screen.blit(koka, koka_rect)
 
+
+        bomb_rect.move_ip(vx, vy)
         screen.blit(bomb, bomb_rect)
 
         pg.display.update()
