@@ -4,7 +4,6 @@ import random
 
 def main():
     clock = pg.time.Clock()
-    #clock.tick(0.5)
 
     pg.display.set_caption("逃げろ！こうかとん！")
     screen = pg.display.set_mode((1600, 900))
@@ -27,7 +26,7 @@ def main():
     vx, vy = 1, 1
 
     while True:
-        #clock.tick(1000)
+        clock.tick(1000)
         screen.blit(bg, bg_rect)
 
         for event in pg.event.get():
@@ -58,8 +57,9 @@ def main():
         if tate != 0:
             vy *= -1
         screen.blit(bomb, bomb_rect)
-        clock.tick(1000)
-
+        
+        if koka_rect.colliderect(bomb_rect):
+            return
         pg.display.update()
 
 def check_bound(rect, scr_rect):
