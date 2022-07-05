@@ -1,6 +1,7 @@
 import pygame as pg
 import sys
 import random
+import datetime
 
 def main():
     clock = pg.time.Clock()
@@ -18,16 +19,47 @@ def main():
     koka_rect = koka.get_rect()
     koka_rect.center = 900, 400
 
-    bomb = pg.Surface((20, 20))
-    bomb.set_colorkey((0, 0, 0))
-    pg.draw.circle(bomb, (255, 0, 0), (10, 10), 10)
-    bomb_rect = bomb.get_rect()
-    bomb_rect.center = random.randint(0,screen_rect.width),                        random.randint(0, screen_rect.height)
-    vx, vy = 1, 1
+    #爆弾を4つ生成　内3つは画面外
+    bomb1 = pg.Surface((20, 20))
+    bomb1.set_colorkey((0, 0, 0))
+    pg.draw.circle(bomb1, (255, 0, 0), (10, 10), 10)
+    bomb1_rect = bomb1.get_rect()
+    bomb1_rect.center = random.randint(0,screen_rect.width),                        random.randint(0, screen_rect.height)
+    vx1, vy1 = 1, 1
+
+    bomb2 = pg.Surface((20, 20))
+    bomb2.set_colorkey((0, 0, 0))
+    pg.draw.circle(bomb2, (255, 0, 0), (10, 10), 10)
+    bomb2_rect = bomb2.get_rect()
+    bomb2_rect.center = random.randint(-50,-50),                        random.randint(0, screen_rect.height)
+    vx2, vy2 = 0, 0
+
+    bomb3 = pg.Surface((20, 20))
+    bomb3.set_colorkey((0, 0, 0))
+    pg.draw.circle(bomb3, (255, 0, 0), (10, 10), 10)
+    bomb3_rect = bomb3.get_rect()
+    bomb3_rect.center = random.randint(-50,-50),                        random.randint(0, screen_rect.height)
+    vx3, vy3 = 0, 0
+
+    bomb4 = pg.Surface((20, 20))
+    bomb4.set_colorkey((0, 0, 0))
+    pg.draw.circle(bomb4, (255, 0, 0), (10, 10), 10)
+    bomb4_rect = bomb4.get_rect()
+    bomb4_rect.center = random.randint(-50,-50),                        random.randint(0, screen_rect.height)
+    vx4, vy4 = 0, 0
+
+    bombs = [(bomb1, bomb1_rect), (bomb2, bomb2_rect), (bomb3, bomb3_rect),(bomb4, bomb4_rect)] # 爆弾のリスト
+
 
     while True:
         clock.tick(1000)
+        time = pg.time.get_ticks()
+
         screen.blit(bg, bg_rect)
+
+        font = pg.font.Font(None, 80)
+        txt = font.render(str(time/1000)[:-1], True, (0, 0, 0))
+        screen.blit(txt, (760, 40))
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -50,16 +82,59 @@ def main():
             koka_rect.centery += tate
         screen.blit(koka, koka_rect)
 
-        bomb_rect.move_ip(vx, vy)
-        yoko, tate = check_bound(bomb_rect, screen_rect)
+        bomb1_rect.move_ip(vx1, vy1)
+        yoko, tate = check_bound(bomb1_rect, screen_rect)
         if yoko != 0:
-            vx *= -1
+            vx1 *= -1
         if tate != 0:
-            vy *= -1
-        screen.blit(bomb, bomb_rect)
+            vy1 *= -1
+        screen.blit(bomb1, bomb1_rect)
+
+        if 19950 <= time <= 20000: # 経過時間20秒なら 誤差込み
+            vx2 = -1 * vx1 # 横は1つ目と逆方向で1.5倍速
+            vy2 = 2 * vy1 # 縦は1つ目の倍速
+            # 1つ目から分裂するように描画
+            bomb2_rect.centerx = bomb1_rect.centerx
+            bomb2_rect.centery = bomb1_rect.centery
+        bomb2_rect.move_ip(vx2, vy2)
+        yoko, tate = check_bound(bomb2_rect, screen_rect)
+        if yoko != 0:
+            vx2 *= -1
+        if tate != 0:
+            vy2 *= -1
+        screen.blit(bomb2, bomb2_rect)
+
+        if 39950 <= time <= 40000: # 経過時間40秒なら 誤差込み
+            vx3 = 2 * vx1 # 横は1つ目の倍速
+            vy3 = -1 * vy1 # 縦は1つ目と逆
+            # 1つ目から分裂するように描画
+            bomb3_rect.centerx = bomb1_rect.centerx
+            bomb3_rect.centery = bomb1_rect.centery
+        bomb3_rect.move_ip(vx3, vy3)
+        yoko, tate = check_bound(bomb3_rect, screen_rect)
+        if yoko != 0:
+            vx3 *= -1
+        if tate != 0:
+            vy3 *= -1
+        screen.blit(bomb3, bomb3_rect)
+
+        if 59950 <= time <= 60000: # 経過時間60秒なら 誤差込み
+            vx4 = -2 * vx1 # 横は1つ目と逆で倍速
+            vy4 = 2 * vy1 # 縦は1つ目の倍速
+            # 1つ目から分裂するように描画
+            bomb4_rect.centerx = bomb1_rect.centerx
+            bomb4_rect.centery = bomb1_rect.centery
+        bomb4_rect.move_ip(vx4, vy4)
+        yoko, tate = check_bound(bomb4_rect, screen_rect)
+        if yoko != 0:
+            vx4 *= -1
+        if tate != 0:
+            vy4 *= -1
+        screen.blit(bomb4, bomb4_rect)
         
-        if koka_rect.colliderect(bomb_rect):
-            return
+        for x in bombs:
+            if koka_rect.colliderect(x[1]):
+                return
         pg.display.update()
 
 def check_bound(rect, scr_rect):
