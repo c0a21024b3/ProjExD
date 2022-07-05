@@ -22,7 +22,7 @@ def main():
     #1つ目の爆弾を生成
     bomb1 = pg.Surface((20, 20))
     bomb1.set_colorkey((0, 0, 0))
-    pg.draw.circle(bomb1, (255, 0, 0), (10, 10), 10)
+    pg.draw.circle(bomb1, (255, 0, 0), (10, 10), 10) # 赤色
     bomb1_rect = bomb1.get_rect()
     bomb1_rect.center = random.randint(0,screen_rect.width), random.randint(0, screen_rect.height)
     vx1, vy1 = 1, 1 # 縦横方向の速度
@@ -30,7 +30,7 @@ def main():
     # 残りの爆弾は画面外に生成
     bomb2 = pg.Surface((20, 20))
     bomb2.set_colorkey((0, 0, 0))
-    pg.draw.circle(bomb2, (255, 0, 0), (10, 10), 10)
+    pg.draw.circle(bomb2, (0, 0, 255), (10, 10), 10) # 青色
     bomb2_rect = bomb2.get_rect()
     bomb2_rect.center = -50,-50 # 初期位置を画面外に設定
     vx2, vy2 = 0, 0 # 速度を0で初期化
@@ -38,14 +38,14 @@ def main():
     #以下同様
     bomb3 = pg.Surface((20, 20))
     bomb3.set_colorkey((0, 0, 0))
-    pg.draw.circle(bomb3, (255, 0, 0), (10, 10), 10)
+    pg.draw.circle(bomb3, (0, 128, 0), (10, 10), 10) # 緑色
     bomb3_rect = bomb3.get_rect()
     bomb3_rect.center = -50,-50
     vx3, vy3 = 0, 0
 
     bomb4 = pg.Surface((20, 20))
     bomb4.set_colorkey((0, 0, 0))
-    pg.draw.circle(bomb4, (255, 0, 0), (10, 10), 10)
+    pg.draw.circle(bomb4, (255, 255, 0), (10, 10), 10) # 黄色
     bomb4_rect = bomb4.get_rect()
     bomb4_rect.center = -50,-50
     vx4, vy4 = 0, 0
