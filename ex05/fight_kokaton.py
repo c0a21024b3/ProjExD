@@ -15,9 +15,8 @@ class Screen:
         self.sfc.blit(self.bg_sfc, self.bg_rect)
         
 
-class Bird(pg.sprite.Sprite):
+class Bird():
     def __init__(self, fname, zoom, place):
-        pg.sprite.Sprite.__init__(self, self.containers)
         self.sfc = pg.image.load(fname)
         self.sfc = pg.transform.rotozoom(self.sfc, 0, zoom)
         self.rect = self.sfc.get_rect()
@@ -45,6 +44,7 @@ class Bird(pg.sprite.Sprite):
 
         self.blit(scr)
     
+    # wasdキーで球を発射
     def attack(self):
         key_states = pg.key.get_pressed()
         if key_states[pg.K_w]:
@@ -57,9 +57,8 @@ class Bird(pg.sprite.Sprite):
             self.ball = Ball(5, (0, 128, 0), (1, 0), self.rect.center)
 
 
-class Bomb(pg.sprite.Sprite):
+class Bomb():
     def __init__(self, color, r, v, scr: Screen):
-        pg.sprite.Sprite.__init__(self, self.containers)
         self.sfc = pg.Surface((r*2, r*2))
         self.sfc.set_colorkey((0, 0, 0))
         pg.draw.circle(self.sfc, color, (r, r), r)
@@ -81,9 +80,9 @@ class Bomb(pg.sprite.Sprite):
         self.blit(scr)
 
 
-class Enemy(pg.sprite.Sprite):
+# 敵のクラス
+class Enemy():
     def __init__(self, size, color, tar, scr: Screen):
-        pg.sprite.Sprite.__init__(self, self.containers)
         self.sfc = pg.Surface(size)
         pg.Surface.fill(self.sfc, color)
         self.rect = self.sfc.get_rect()
@@ -92,10 +91,10 @@ class Enemy(pg.sprite.Sprite):
         v = self.get_v(tar)
         self.ball = Ball(5, (0, 0, 255), v, self.rect.center)
         
-    
     def blit(self, scr: Screen):
         scr.sfc.blit(self.sfc, self.rect)
     
+    # ターゲットが自身より右にいるか左にいるかの判定
     def get_v(self, tar):
         tx = tar.rect.centerx
         x = self.rect.centerx
@@ -110,9 +109,9 @@ class Enemy(pg.sprite.Sprite):
         self.ball = Ball(7, (0, 0, 255), v, self.rect.center)
 
 
-class Ball(pg.sprite.Sprite):
+# こうかとんと敵が放つ球のクラス
+class Ball():
     def __init__(self, size, color, v,  place):
-        pg.sprite.Sprite.__init__(self, self.containers)
         self.sfc = pg.Surface((size*2, size*2))
         self.sfc.set_colorkey((0, 0, 0))
         pg.draw.circle(self.sfc, color, (size, size), size)
@@ -125,8 +124,6 @@ class Ball(pg.sprite.Sprite):
     
     def update(self, scr: Screen):
         self.rect.move_ip(self.vx, self.vy)
-        if not 0 <= self.rect.centerx <= scr.rect.left or not 0 <= self.rect.centery <= scr.rect.bottom:
-            self.kill()
         self.blit(scr)
         
     
@@ -135,15 +132,6 @@ def main():
 
     screen = Screen("逃げろ！こうかとん", (1600, 900), "fig/pg_bg.jpg")
     screen.blit()
-
-    balls = pg.sprite.Group()
-    enemys = pg.sprite.Group()
-    all = pg.sprite.RenderUpdates()
-
-    Ball.containers = balls, all
-    Enemy.containers = enemys, all
-    Bird.containers = all
-    Bomb.containers = all
 
     koka = Bird("fig/6.png", 2.0, (900, 400))
     bomb = Bomb((255, 0, 0), 10, (1,1), screen)
@@ -167,6 +155,7 @@ def main():
             if enemy.rect.colliderect(koka.ball.rect):
                 enemy = Enemy((30, 30), (0, 0, 0), koka, screen)
         
+        # 2.5秒後から5秒おきに敵が攻撃
         if 2500 <= time % 5000 <= 2550:
             enemy.attack(koka)
             enemy.ball.blit(screen)
