@@ -1,7 +1,6 @@
 import pygame as pg
 import sys
 import random
-import datetime
 
 
 class Screen:
@@ -158,9 +157,6 @@ def main():
             if event.type == pg.QUIT:
                 return
         
-        if 0 <= time % 20000 == 50:
-            enemy = Enemy((30, 30), (0, 0, 0), koka, screen)
-
         koka.update(screen)
         bomb.update(screen)
         enemy.blit(screen)
@@ -168,11 +164,12 @@ def main():
         if koka.ball:
             koka.ball.update(screen)
             koka.ball.blit(screen)
+            if enemy.rect.colliderect(koka.ball.rect):
+                enemy = Enemy((30, 30), (0, 0, 0), koka, screen)
         
         if 2500 <= time % 5000 <= 2550:
             enemy.attack(koka)
             enemy.ball.blit(screen)
-
         
         if time >= 2500:
             enemy.ball.update(screen)
