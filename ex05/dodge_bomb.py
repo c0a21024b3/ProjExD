@@ -20,7 +20,7 @@ class Bird:
         self.sfc = pg.image.load(fname)
         self.sfc = pg.transform.rotozoom(self.sfc, 0, zoom)
         self.rect = self.sfc.get_rect()
-        self.rect.center = place
+        self.rect.center = place 
 
     def blit(self, scr: Screen):
         scr.sfc.blit(self.sfc, self.rect)
